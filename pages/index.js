@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons/faCirclePlus'
-import { faFolder } from '@fortawesome/free-solid-svg-icons/faFolder'
+// import { faFolder } from '@fortawesome/free-solid-svg-icons/faFolder'
+import Folder from '../components/Folder';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import { 
@@ -86,20 +87,19 @@ const Home = () => {
               folders.map((folder) => {
                 return (
                   <>
-                    <Container>
-                      {/* <li className='d-flex'>
-                        <div className='d-flex align-items-center gap-2 justify-content-center text-center'>
-                          <FontAwesomeIcon fontSize={32} icon={faFolder} />  
-                          <p>{folder.name}</p>
-                        </div>
-                      </li> */}
+                    {/* <Container>
                       <ListGroup>
                         <ListGroup.Item key={folder.id.toString()} className='d-flex align-items-center gap-2'>
                             <FontAwesomeIcon fontSize={32} icon={faFolder} />  
                             <p className='mb-0'>{folder.name}</p>
                         </ListGroup.Item>
                       </ListGroup>
-                    </Container>
+                    </Container> */}
+                    
+                    <Folder 
+                      name={folder.name} 
+                      id={folder.id}
+                    />
                   </>
                 )
               })
