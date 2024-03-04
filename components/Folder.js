@@ -12,7 +12,7 @@ export default function Folder (props) {
     <Container>
       <ListGroup>
         <ListGroup.Item key={props.id.toString()} className='d-flex align-items-center gap-2'>
-            <FontAwesomeIcon fontSize={32} icon={faFolder} />  
+            <FontAwesomeIcon fontSize={32} color='#eab308' icon={faFolder} />  
             <p className='mb-0'>{props.name}</p>
         </ListGroup.Item>
       </ListGroup>

@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons/faCirclePlus'
-// import { faFolder } from '@fortawesome/free-solid-svg-icons/faFolder'
 import Folder from '../components/Folder';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -14,10 +13,14 @@ import {
   Form,
   ListGroup,
 } from 'react-bootstrap';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Home = () => {
-  const folders = [
+  useEffect(() => {
+    setFolders(folders)
+  },[])
+
+  const [folders, setFolders] = useState([
     {
       id: 1,
       name: "Fotos"
@@ -30,11 +33,22 @@ const Home = () => {
       id: 3,
       name: 'Musicas'
     }
-  ]
-  const [show, setShow] = useState(false);
+  ])
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [inputFolder, setInputFolder] = useState("")
+  const [show, setShow] = useState(false)
+
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
+
+  const submitValue = () => {
+    setFolders([...folders, {
+      id: folders.length + 1,
+      name: inputFolder
+    }])
+
+    handleClose()
+  }
 
   return (
     <Container fluid>
@@ -50,7 +64,7 @@ const Home = () => {
                   {/* Folder Name */}
                   <Form.Group className="mb-3" controlId="formFolderName">
                       <Form.Label>Nome da Pasta:</Form.Label>
-                      <Form.Control type="text" placeholder="Ex: Fotos" />
+                      <Form.Control type="text" placeholder="Ex: Fotos" onChange={e => setInputFolder(e.target.value)} />
                   </Form.Group>
               </Form>
             </Modal.Body>
@@ -58,7 +72,7 @@ const Home = () => {
                 <Button variant="secondary" onClick={handleClose}>
                   Fechar
                 </Button>
-                <Button variant="primary" onClick={handleClose}>
+                <Button variant="primary" onClick={submitValue}>
                   Criar
                 </Button>
             </Modal.Footer>
@@ -80,23 +94,14 @@ const Home = () => {
       </Navbar>
 
       {/* Folder List */}
-      <Container fluid>
+      <Container className="p-4">
         <Col>
           <Row>
             {
               folders.map((folder) => {
                 return (
-                  <>
-                    {/* <Container>
-                      <ListGroup>
-                        <ListGroup.Item key={folder.id.toString()} className='d-flex align-items-center gap-2'>
-                            <FontAwesomeIcon fontSize={32} icon={faFolder} />  
-                            <p className='mb-0'>{folder.name}</p>
-                        </ListGroup.Item>
-                      </ListGroup>
-                    </Container> */}
-                    
-                    <Folder 
+                  <>                    
+                    <Folder
                       name={folder.name} 
                       id={folder.id}
                     />
