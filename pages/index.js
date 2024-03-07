@@ -13,13 +13,9 @@ import {
   Form,
   ListGroup,
 } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const Home = () => {
-  useEffect(() => {
-    setFolders(folders)
-  },[])
-
   const [folders, setFolders] = useState([
     {
       id: 1,
@@ -98,14 +94,14 @@ const Home = () => {
         <Col>
           <Row>
             {
-              folders.map((folder) => {
+              folders.map((folder, index) => {
                 return (
-                  <>                    
+                  <Container key={index}>                    
                     <Folder
                       name={folder.name} 
                       id={folder.id}
                     />
-                  </>
+                  </Container>
                 )
               })
             }
