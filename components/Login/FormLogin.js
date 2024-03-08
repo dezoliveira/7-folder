@@ -95,17 +95,25 @@ const FormLogin = () => {
       <Container>
         <Row>
           <Col>
-            <Toast style={toastiee} className={success ? 'bg-success' : 'bg-danger'} onClose={() => setShow(false)} show={show} delay={5000} autohide>
+            <Toast 
+              style={toastiee} 
+              className={success ? 'bg-success' : 'bg-danger'} 
+              onClose={() => setShow(false)}
+              show={show} delay={5000}
+              autohide
+            >
               <Toast.Header>
                 <img
                   src="holder.js/20x20?text=%20"
                   className="rounded me-2"
                   alt=""
                 />
-                <strong className="me-auto">Bootstrap</strong>
-                <small>11 mins ago</small>
+                <strong className="me-auto">Login</strong>
+                {/* <small>11 mins ago</small> */}
               </Toast.Header>
-              <Toast.Body>{success ? 'Logado com sucesso!' : 'Login Incorreto!'}</Toast.Body>
+              <Toast.Body>
+                {success ? 'Logado com sucesso!' : 'Login Incorreto!'}
+              </Toast.Body>
             </Toast>
           </Col>
         </Row>
