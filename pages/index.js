@@ -23,19 +23,21 @@ import Folder from '../components/Folder';
 
 const Home = () => {
   const router = useRouter()
-
-  // const [token, setToken] = useState("")
-
   const [folders, setFolders] = useState([])
-  const [isFetching, setFetching] = useState(true)
+  const [isFetching, setFetching] = useState(false)
 
   const [inputFolder, setInputFolder] = useState("")
+  const [selectedParent, setSelectedParent] = useState(null)
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
   useEffect(() => {
+    getFolders()
+  }, [])
+
+  const getFolders = () => {
     let token = localStorage.getItem('token')
     console.log(token)
 
@@ -56,11 +58,9 @@ const Home = () => {
     .then(handleErrors)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
       setFolders(data)
     })
-
-  }, [])
+  }
 
   const handleErrors = (response) => {
     if(response.status === 401) {
@@ -70,11 +70,37 @@ const Home = () => {
     return response
   }
 
-  const submitValue = () => {
-    setFolders([...folders, {
-      id: folders.length + 1,
-      name: inputFolder
-    }])
+  const createFolder = async () => {
+    let token = localStorage.getItem('token')
+    
+    await fetch('https://7dev-code-test.lcc7.online/api/v1/directories', {
+      method: 'POST',
+      headers: {
+        // 'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'accept': 'application/json',
+        'X-CSRFToken': 'SDucg4TiBJFGE6pkEpY75iXFIPBSJm2Os8APEPFSkbRLOC4aLRcvRuKAuFCBBWlu',
+        Authorization: `Bearer ${JSON.parse(token)}`
+        // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        // 'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'
+      },
+      body: JSON.stringify(
+        {
+          name: inputFolder,
+          parent: selectedParent,
+        }
+      )
+    })
+    .then(() => {
+      getFolders()
+    })
+  }
+
+  const submitValue = (e) => {
+    e.preventDefault()
+
+    createFolder()
 
     handleClose()
   }
@@ -90,11 +116,32 @@ const Home = () => {
             </Modal.Header>
             <Modal.Body>
               <Form>
-                  {/* Folder Name */}
-                  <Form.Group className="mb-3" controlId="formFolderName">
-                      <Form.Label>Nome da Pasta:</Form.Label>
-                      <Form.Control type="text" placeholder="Ex: Fotos" onChange={e => setInputFolder(e.target.value)} />
-                  </Form.Group>
+                {/* Folder Name */}
+                <Form.Group className="mb-3" controlId="formFolderName">
+                    <Form.Label>Pasta Raiz:</Form.Label>
+                    <Form.Select 
+                      aria-label="Default select example"
+                      onChange={e => setSelectedParent(e.target.value)}
+                    >
+                      <option value="">/</option>
+                        {
+                          folders.length ?
+                          <>
+                            {
+                              folders.map(folder => (
+                                <option value={folder.id}>
+                                  {folder.name}
+                                </option>
+                              ))
+                            }
+                          </> : ''
+                        }
+                    </Form.Select>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formFolderName">
+                    <Form.Label>Nome da Pasta:</Form.Label>
+                    <Form.Control type="text" placeholder="Ex: Fotos" onChange={e => setInputFolder(e.target.value)} />
+                </Form.Group>
               </Form>
             </Modal.Body>
             <Modal.Footer>
@@ -126,34 +173,20 @@ const Home = () => {
       <Container className="p-4">
         <Col>
           <Row>
-            {/* {
-              folders.map((folder, index) => {
-                return (
-                  <Container key={index}>                    
-                    <Folder
-                      name={folder.name} 
-                      id={folder.id}
-                    />
-                  </Container>
-                )
-              })
-            } */}
             {
               folders.length ?
-               <>
-                <Container>
-                  {
-                    folders.map((folder, index) => (
-                      <Container key={index}>                    
-                        <Folder
-                          name={folder.name} 
-                          id={folder.id}
-                        />
-                      </Container>
-                    ))
-                  }
-                </Container>
-               </> : ''
+              <>
+                {
+                  folders.map((folder, index) => (
+                    <Container key={index}>                    
+                      <Folder
+                        name={folder.name} 
+                        id={folder.id}
+                      />
+                    </Container>
+                  ))
+                }
+              </> : ''
             }
           </Row>
         </Col>
