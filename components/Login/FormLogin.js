@@ -37,11 +37,11 @@ const toastiee = {
 const FormLogin = () => {
   const [inputUsername, setInputUsername] = useState("")
   const [inputPassword, setInputPassword] = useState("")
+  const [inputChecked, setInputChecked] = useState(true)
   const [show, setShow] = useState(false)
   const [error, setError] = useState(false)
 
   const inputRef = useRef(null)
-
   const router = useRouter()
 
   const redirectTo = () => {
@@ -76,15 +76,21 @@ const FormLogin = () => {
       }
     })
     .then(data => { 
+      console.log(data)
       handleAccess(data)
     });
 
+  }
+
+  const handleToken = (data) => {
+    localStorage.setItem('token', JSON.stringify(data.access))
   }
 
   const handleAccess = (data) => {
     if (data !== undefined) {
       setError(false)
       setShow(true)
+      handleToken(data)
       setTimeout(() => {
         redirectTo()
       }, 2000);
@@ -167,7 +173,11 @@ const FormLogin = () => {
 
                 {/* Keep Pass */}
                 <Form.Group className="mb-3" controlId="formCheckBox">
-                  <Form.Check type="checkbox" checked="true" label="Manter Conectado" />
+                  <Form.Check 
+                    type="checkbox"
+                    onChange={e => setInputChecked(e.target.value)}
+                    checked={inputChecked}
+                    label="Manter Conectado" />
                 </Form.Group>
 
                 {/* Button Login */}
