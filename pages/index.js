@@ -53,12 +53,12 @@ const Home = () => {
     }
 
     fetch(`https://7dev-code-test.lcc7.online/api/v1/directories`, requestOptions)
-      .then(handleErrors)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data)
-        setFolders(data)
-      })
+    .then(handleErrors)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+      setFolders(data)
+    })
 
   }, [])
 
