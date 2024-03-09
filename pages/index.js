@@ -1,7 +1,8 @@
+//Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons/faCirclePlus'
-import Folder from '../components/Folder';
 
+//Bootstrap
 import 'bootstrap/dist/css/bootstrap.css';
 import { 
   Container,
@@ -11,48 +12,63 @@ import {
   Button,
   Modal,
   Form,
-  ListGroup,
 } from 'react-bootstrap';
+
+//Uses
+import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react';
 
+//Components
+import Folder from '../components/Folder';
+
 const Home = () => {
-  useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        'accept': 'application/json',
-        'X-CSRFToken': 'SDucg4TiBJFGE6pkEpY75iXFIPBSJm2Os8APEPFSkbRLOC4aLRcvRuKAuFCBBWlu',
-        Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5OTEwMDM1LCJpYXQiOjE3MDk5MDk3MzUsImp0aSI6IjJhODNkMjBlZjUwMTQ1ZTQ5MDM4MGU1NWI4MDg3ZTY0IiwidXNlcl9pZCI6M30.wcYaMIR43zpG3vxIswkIZxKoEDjDcP-bgMSPIQIJUhA"
-      }
-    }
+  const router = useRouter()
 
-    fetch(`https://7dev-code-test.lcc7.online/api/v1/directories`, requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data)
-    })
-  })
+  // const [token, setToken] = useState("")
 
-  const [folders, setFolders] = useState([
-    {
-      id: 1,
-      name: "Fotos"
-    },
-    {
-      id: 2,
-      name: 'Videos'
-    },
-    {
-      id: 3,
-      name: 'Musicas'
-    }
-  ])
+  const [folders, setFolders] = useState([])
+  const [isFetching, setFetching] = useState(true)
 
   const [inputFolder, setInputFolder] = useState("")
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
+
+  useEffect(() => {
+    let token = localStorage.getItem('token')
+    console.log(token)
+
+    if(token === undefined) {
+      router.push('/')
+    }
+
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'accept': 'application/json',
+        'X-CSRFToken': 'SDucg4TiBJFGE6pkEpY75iXFIPBSJm2Os8APEPFSkbRLOC4aLRcvRuKAuFCBBWlu',
+        Authorization: `Bearer ${JSON.parse(token)}`
+      }
+    }
+
+    fetch(`https://7dev-code-test.lcc7.online/api/v1/directories`, requestOptions)
+    .then(handleErrors)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+      setFolders(data)
+    })
+
+  }, [])
+
+  const handleErrors = (response) => {
+    if(response.status === 401) {
+      router.push('/login')
+    }
+
+    return response
+  }
 
   const submitValue = () => {
     setFolders([...folders, {
@@ -110,7 +126,7 @@ const Home = () => {
       <Container className="p-4">
         <Col>
           <Row>
-            {
+            {/* {
               folders.map((folder, index) => {
                 return (
                   <Container key={index}>                    
@@ -121,6 +137,23 @@ const Home = () => {
                   </Container>
                 )
               })
+            } */}
+            {
+              folders.length ?
+               <>
+                <Container>
+                  {
+                    folders.map((folder, index) => (
+                      <Container key={index}>                    
+                        <Folder
+                          name={folder.name} 
+                          id={folder.id}
+                        />
+                      </Container>
+                    ))
+                  }
+                </Container>
+               </> : ''
             }
           </Row>
         </Col>
