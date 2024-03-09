@@ -13,9 +13,26 @@ import {
   Form,
   ListGroup,
 } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Home = () => {
+  useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'accept': 'application/json',
+        'X-CSRFToken': 'SDucg4TiBJFGE6pkEpY75iXFIPBSJm2Os8APEPFSkbRLOC4aLRcvRuKAuFCBBWlu',
+        Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5OTEwMDM1LCJpYXQiOjE3MDk5MDk3MzUsImp0aSI6IjJhODNkMjBlZjUwMTQ1ZTQ5MDM4MGU1NWI4MDg3ZTY0IiwidXNlcl9pZCI6M30.wcYaMIR43zpG3vxIswkIZxKoEDjDcP-bgMSPIQIJUhA"
+      }
+    }
+
+    fetch(`https://7dev-code-test.lcc7.online/api/v1/directories`, requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+    })
+  })
+
   const [folders, setFolders] = useState([
     {
       id: 1,

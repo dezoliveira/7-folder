@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 //Boostrap
 import 'bootstrap/dist/css/bootstrap.css'
@@ -30,10 +30,17 @@ const toastiee = {
   right: 50
 }
 
+// const fix = {
+//   minHeight: '40px'
+// }
+
 const FormLogin = () => {
-  // const [token, setToken] = useState()
+  const [inputUsername, setInputUsername] = useState("")
+  const [inputPassword, setInputPassword] = useState("")
   const [show, setShow] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState(false)
+
+  const inputRef = useRef(null)
 
   const router = useRouter()
 
@@ -47,16 +54,16 @@ const FormLogin = () => {
     await fetch('https://7dev-code-test.lcc7.online/api/v1/token', {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
+        // 'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'
+        // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        // 'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'
       },
       body: JSON.stringify(
         {
-          username: "andres",
-          password: "20240229@Bb"
+          username: inputUsername,
+          password: inputPassword
         }
       )
     })
@@ -76,7 +83,7 @@ const FormLogin = () => {
 
   const handleAccess = (data) => {
     if (data !== undefined) {
-      setSuccess(true)
+      setError(false)
       setShow(true)
       setTimeout(() => {
         redirectTo()
@@ -86,7 +93,8 @@ const FormLogin = () => {
 
   const handleError = () => {
     setShow(true)
-    setSuccess(false)
+    setError(true)
+    inputRef.current.focus();
     return
   }
 
@@ -97,7 +105,7 @@ const FormLogin = () => {
           <Col>
             <Toast 
               style={toastiee} 
-              className={success ? 'bg-success' : 'bg-danger'} 
+              className={error ? 'bg-danger' : 'bg-success'} 
               onClose={() => setShow(false)}
               show={show} delay={5000}
               autohide
@@ -112,7 +120,7 @@ const FormLogin = () => {
                 {/* <small>11 mins ago</small> */}
               </Toast.Header>
               <Toast.Body>
-                {success ? 'Logado com sucesso!' : 'Login Incorreto!'}
+                {error ? 'Login Incorreto!' : 'Logado com sucesso!'}
               </Toast.Body>
             </Toast>
           </Col>
@@ -137,13 +145,24 @@ const FormLogin = () => {
                 {/* Login */}
                 <Form.Group className="mb-3" controlId="formLogin">
                   <Form.Label>Login</Form.Label>
-                  <Form.Control type="login" placeholder="usuario@email.com" />
+                  <Form.Control
+                    type="login"
+                    placeholder="usuario@email.com"
+                    className={error ? 'border-danger' : ''}
+                    onChange={e => setInputUsername(e.target.value)}
+                    ref={inputRef}
+                  />
                 </Form.Group>
 
                 {/* Password */}
                 <Form.Group className="mb-3" controlId="formPassword">
                   <Form.Label>Senha</Form.Label>
-                  <Form.Control type="password" placeholder="Password" />
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    className={error ? 'border-danger' : ''}
+                    onChange={e => setInputPassword(e.target.value)}
+                  />
                 </Form.Group>
 
                 {/* Keep Pass */}
