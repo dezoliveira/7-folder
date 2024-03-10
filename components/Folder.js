@@ -1,6 +1,8 @@
 //Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFolder } from '@fortawesome/free-solid-svg-icons/faFolder'
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare'
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 
 //Bootstrap
 import 'bootstrap/dist/css/bootstrap.css';
@@ -12,6 +14,11 @@ import {
 import Actions from './Actions';
 
 export default function Folder (props) {
+  const removeFolder = (e) => {
+    e.preventDefault()
+    props.handleRemove(props.id)
+  }
+
   return (
     <Container>
       <ListGroup>
@@ -21,8 +28,9 @@ export default function Folder (props) {
               <FontAwesomeIcon fontSize={32} color='#eab308' icon={faFolder} />  
               <p className='mb-0'>{props.name}</p>
             </Col>
-            <Col lg={4} className='d-flex align-items-center justify-content-end'>
-              <Actions />
+            <Col lg={4} className='d-flex align-items-center justify-content-end gap-2'>
+              <FontAwesomeIcon fontSize={18} color='#fd7e14' icon={faPenToSquare} />
+              <FontAwesomeIcon fontSize={18} color='#dc3545' icon={faTrash} onClick={removeFolder}/>
             </Col>
           </Container>
         </ListGroup.Item>
