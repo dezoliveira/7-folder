@@ -24,13 +24,19 @@ import Folder from '../components/Folder';
 const Home = () => {
   const router = useRouter()
   const [folders, setFolders] = useState([])
-  const [isFetching, setFetching] = useState(false)
 
   const [inputFolder, setInputFolder] = useState("")
-  const [selectedParent, setSelectedParent] = useState(null)
+  const [selectedParent, setSelectedParent] = useState("")
   const [show, setShow] = useState(false)
+  const [edit, setEdit] = useState(false)
+  const [id, setid] = useState("")
 
-  const handleClose = () => setShow(false)
+  const handleClose = () => {
+    setShow(false)
+    setInputFolder("")
+    setSelectedParent("")
+  }
+
   const handleShow = () => setShow(true)
 
   useEffect(() => {
@@ -127,12 +133,50 @@ const Home = () => {
     })
   }
 
+  const editFolder = async () => {
+    let token = localStorage.getItem('token')
+    
+    await fetch(`https://7dev-code-test.lcc7.online/api/v1/directory/${id}`, {
+      method: 'PATCH',
+      headers: {
+        // 'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'accept': 'application/json',
+        'X-CSRFToken': 'SDucg4TiBJFGE6pkEpY75iXFIPBSJm2Os8APEPFSkbRLOC4aLRcvRuKAuFCBBWlu',
+        Authorization: `Bearer ${JSON.parse(token)}`
+        // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        // 'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'
+      },
+      body: JSON.stringify(
+        {
+          name: inputFolder,
+          parent: selectedParent,
+        }
+      )
+    })
+    .then(() => {
+      getFolders()
+    })
+  }
+
   const submitValue = (e) => {
     e.preventDefault()
 
-    createFolder()
+    if (edit) {
+      editFolder()
+    } else {
+      createFolder()
+    }
 
     handleClose()
+  }
+
+  const teste = (id, name, parent) => {
+    setInputFolder(name)
+    setSelectedParent(parent)
+    setid(id)
+    setEdit(true)
   }
 
   return (
@@ -152,6 +196,7 @@ const Home = () => {
                     <Form.Select 
                       aria-label="Default select example"
                       onChange={e => setSelectedParent(e.target.value)}
+                      value={selectedParent ? selectedParent : ''}
                     >
                       <option value="">/</option>
                         {
@@ -159,7 +204,7 @@ const Home = () => {
                           <>
                             {
                               folders.map(folder => (
-                                <option value={folder.id}>
+                                <option value={folder.id} key={folder.id}>
                                   {folder.name}
                                 </option>
                               ))
@@ -170,7 +215,7 @@ const Home = () => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formFolderName">
                     <Form.Label>Nome da Pasta:</Form.Label>
-                    <Form.Control type="text" placeholder="Ex: Fotos" onChange={e => setInputFolder(e.target.value)} />
+                    <Form.Control value={inputFolder ? inputFolder : ''} type="text" placeholder="Ex: Fotos" onChange={e => setInputFolder(e.target.value)} />
                 </Form.Group>
               </Form>
             </Modal.Body>
@@ -212,7 +257,10 @@ const Home = () => {
                       <Folder
                         name={folder.name} 
                         id={folder.id}
+                        parent={folder.parent}
                         handleRemove={deleteFolder}
+                        handleShow={handleShow}
+                        teste={teste}
                       />
                     </Container>
                   ))
