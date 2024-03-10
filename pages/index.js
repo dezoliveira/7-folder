@@ -97,6 +97,36 @@ const Home = () => {
     })
   }
 
+  const deleteFolder = async (id) => {
+    let token = localStorage.getItem('token')
+    console.log(token)
+
+    if(token === undefined) {
+      router.push('/')
+    }
+
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRFToken': 'SDucg4TiBJFGE6pkEpY75iXFIPBSJm2Os8APEPFSkbRLOC4aLRcvRuKAuFCBBWlu',
+        Authorization: `Bearer ${JSON.parse(token)}`
+      },
+      body: JSON.stringify({
+          name: inputFolder,
+          parent: selectedParent,
+      })
+    }
+
+    await fetch(`https://7dev-code-test.lcc7.online/api/v1/directory/${id}`, requestOptions)
+    .then(handleErrors)
+    // .then((response) => response.json())
+    .then(() => {
+      setFolders(folders.filter((folder) => folder.id !== id))
+    })
+  }
+
   const submitValue = (e) => {
     e.preventDefault()
 
@@ -182,6 +212,7 @@ const Home = () => {
                       <Folder
                         name={folder.name} 
                         id={folder.id}
+                        handleRemove={deleteFolder}
                       />
                     </Container>
                   ))
