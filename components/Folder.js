@@ -14,6 +14,12 @@ import {
 import Actions from './Actions';
 
 export default function Folder (props) {
+  const editFolder = (e) => {
+    e.preventDefault()
+    props.handleShow(true)
+    props.teste(props.id, props.name, props.parent)
+  }
+
   const removeFolder = (e) => {
     e.preventDefault()
     props.handleRemove(props.id)
@@ -29,7 +35,7 @@ export default function Folder (props) {
               <p className='mb-0'>{props.name}</p>
             </Col>
             <Col lg={4} className='d-flex align-items-center justify-content-end gap-2'>
-              <FontAwesomeIcon fontSize={18} color='#fd7e14' icon={faPenToSquare} />
+              <FontAwesomeIcon fontSize={18} color='#fd7e14' icon={faPenToSquare} onClick={editFolder}/>
               <FontAwesomeIcon fontSize={18} color='#dc3545' icon={faTrash} onClick={removeFolder}/>
             </Col>
           </Container>
