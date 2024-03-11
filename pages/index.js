@@ -35,6 +35,7 @@ const Home = () => {
     setShow(false)
     setInputFolder("")
     setSelectedParent("")
+    setEdit(false)
   }
 
   const handleShow = () => setShow(true)
@@ -224,7 +225,7 @@ const Home = () => {
                   Fechar
                 </Button>
                 <Button variant="primary" onClick={submitValue}>
-                  Criar
+                  {edit ? 'Editar' : 'Criar'}
                 </Button>
             </Modal.Footer>
           </Modal>
