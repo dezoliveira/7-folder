@@ -173,12 +173,14 @@ const Home = () => {
     handleClose()
   }
 
-  const teste = (id, name, parent) => {
+  const handleId = (id, name, parent) => {
     setInputFolder(name)
     setSelectedParent(parent)
     setid(id)
     setEdit(true)
   }
+
+  const rootFolders = folders ? folders.filter(folder => folder.parent === null) : null
 
   return (
     <Container fluid>
@@ -249,7 +251,20 @@ const Home = () => {
       <Container className="p-4">
         <Col>
           <Row>
-            {
+            {rootFolders.map(rootFolder => (
+              <Folder
+                key={rootFolder.id} 
+                folder={rootFolder}
+                id={rootFolder.id}
+                name={rootFolder.name}
+                parent={rootFolder.parent}
+                allFolders={folders} 
+                handleRemove={deleteFolder}
+                handleShow={handleShow}
+                handleId={handleId}
+              />
+            ))}
+            {/* {
               folders.length ?
               <>
                 {
@@ -267,7 +282,7 @@ const Home = () => {
                   ))
                 }
               </> : ''
-            }
+            } */}
           </Row>
         </Col>
       </Container>
