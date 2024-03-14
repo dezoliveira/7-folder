@@ -13,26 +13,11 @@ import {
   Toast 
 } from 'react-bootstrap';
 
-import Image from 'next/image'
-
-const imageStyle = {
-  width: '100vh',
-  height: '100vh'
-}
-
-const imageContainer = {
-  height: '100vh'
-}
-
 const toastiee = {
   position: 'absolute',
   top: 50,
   right: 50
 }
-
-// const fix = {
-//   minHeight: '40px'
-// }
 
 const FormLogin = () => {
   const [inputUsername, setInputUsername] = useState("")
@@ -54,11 +39,8 @@ const FormLogin = () => {
     await fetch('https://7dev-code-test.lcc7.online/api/v1/token', {
       method: 'POST',
       headers: {
-        // 'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        // 'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'
+        'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify(
         {
@@ -106,9 +88,10 @@ const FormLogin = () => {
 
   return (
     <Container fluid>
+      {/* Toast */}
       <Container>
         <Row>
-          <Col>
+          <Col >
             <Toast 
               style={toastiee} 
               className={error ? 'bg-danger' : 'bg-success'} 
@@ -132,62 +115,50 @@ const FormLogin = () => {
           </Col>
         </Row>
       </Container>
-      <Container className='d-flex align-items-center justify-content-center' fluid>
-        <Col lg={8} md={8} sm={12}>
-          <Row className='d-flex align-content-center justify-content-center' style={imageContainer}>
-            <Image
-              src={"/login.jpg"}
-              style={imageStyle}
-              width={2000}
-              height={2000}
-              alt="Picture of the author"
-            />
+      {/* Toast */}
+      <Container fluid className='d-flex align-items-center justify-content-center'>
+        <Col lg={6} md={6} sm={12}>
+          <Row>
+            <Form>
+              {/* Login */}
+              <Form.Group className="mb-3" controlId="formLogin">
+                <Form.Label>Login</Form.Label>
+                <Form.Control
+                  type="login"
+                  placeholder="usuario@email.com"
+                  className={error ? 'border-danger' : ''}
+                  onChange={e => setInputUsername(e.target.value)}
+                  ref={inputRef}
+                />
+              </Form.Group>
+
+              {/* Password */}
+              <Form.Group className="mb-3" controlId="formPassword">
+                <Form.Label>Senha</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  className={error ? 'border-danger' : ''}
+                  onChange={e => setInputPassword(e.target.value)}
+                />
+              </Form.Group>
+
+              {/* Keep Pass */}
+              <Form.Group className="mb-3" controlId="formCheckBox">
+                <Form.Check 
+                  type="checkbox"
+                  onChange={e => setInputChecked(e.target.value)}
+                  checked={inputChecked}
+                  label="Manter Conectado" />
+              </Form.Group>
+
+              {/* Button Login */}
+              <Button variant="primary" type="submit" onClick={authRequest}>
+                Entrar
+              </Button>
+            </Form>
           </Row>
         </Col>
-        <Container className='d-flex align-items-center justify-content-center'>
-          <Col lg={6} md={6} sm={12}>
-            <Row>
-              <Form>
-                {/* Login */}
-                <Form.Group className="mb-3" controlId="formLogin">
-                  <Form.Label>Login</Form.Label>
-                  <Form.Control
-                    type="login"
-                    placeholder="usuario@email.com"
-                    className={error ? 'border-danger' : ''}
-                    onChange={e => setInputUsername(e.target.value)}
-                    ref={inputRef}
-                  />
-                </Form.Group>
-
-                {/* Password */}
-                <Form.Group className="mb-3" controlId="formPassword">
-                  <Form.Label>Senha</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    className={error ? 'border-danger' : ''}
-                    onChange={e => setInputPassword(e.target.value)}
-                  />
-                </Form.Group>
-
-                {/* Keep Pass */}
-                <Form.Group className="mb-3" controlId="formCheckBox">
-                  <Form.Check 
-                    type="checkbox"
-                    onChange={e => setInputChecked(e.target.value)}
-                    checked={inputChecked}
-                    label="Manter Conectado" />
-                </Form.Group>
-
-                {/* Button Login */}
-                <Button variant="primary" type="submit" onClick={authRequest}>
-                  Entrar
-                </Button>
-              </Form>
-            </Row>
-          </Col>
-        </Container>
       </Container>
     </Container>
   )
