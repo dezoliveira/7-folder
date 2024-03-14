@@ -180,8 +180,8 @@ const Home = () => {
     setEdit(true)
   }
 
-  const rootFolders = folders ? folders.filter(folder => folder.parent === null) : null
-
+  const rootFolders = folders.filter(folder => folder.parent === null)
+    
   return (
     <Container fluid>
       { 
@@ -251,7 +251,7 @@ const Home = () => {
       <Container className="p-4">
         <Col>
           <Row>
-            {rootFolders.map(rootFolder => (
+            {rootFolders.length ? rootFolders.map(rootFolder => (
               <Folder
                 key={rootFolder.id} 
                 folder={rootFolder}
@@ -263,7 +263,7 @@ const Home = () => {
                 handleShow={handleShow}
                 handleId={handleId}
               />
-            ))}
+            )) : ''}
             {/* {
               folders.length ?
               <>
