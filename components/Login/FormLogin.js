@@ -1,7 +1,4 @@
 'use client'
-import { useRouter } from 'next/navigation'
-import { useState, useRef } from 'react'
-
 //Boostrap
 import 'bootstrap/dist/css/bootstrap.css'
 import { 
@@ -10,14 +7,13 @@ import {
   Button,
   Col,
   Row,
-  Toast 
 } from 'react-bootstrap';
 
-const toastiee = {
-  position: 'absolute',
-  top: 50,
-  right: 50
-}
+import { useRouter } from 'next/navigation'
+import { useState, useRef } from 'react'
+
+//Components
+import Toastie from '../Utils/Toastie';
 
 const FormLogin = () => {
   const [inputUsername, setInputUsername] = useState("")
@@ -86,36 +82,19 @@ const FormLogin = () => {
     return
   }
 
+  const handleShow = () => {
+    setShow(false)
+  }
+
   return (
     <Container fluid>
-      {/* Toast */}
-      <Container>
-        <Row>
-          <Col >
-            <Toast 
-              style={toastiee} 
-              className={error ? 'bg-danger' : 'bg-success'} 
-              onClose={() => setShow(false)}
-              show={show} delay={5000}
-              autohide
-            >
-              <Toast.Header>
-                <img
-                  src="holder.js/20x20?text=%20"
-                  className="rounded me-2"
-                  alt=""
-                />
-                <strong className="me-auto">Login</strong>
-                {/* <small>11 mins ago</small> */}
-              </Toast.Header>
-              <Toast.Body>
-                {error ? 'Login Incorreto!' : 'Logado com sucesso!'}
-              </Toast.Body>
-            </Toast>
-          </Col>
-        </Row>
-      </Container>
-      {/* Toast */}
+      <Toastie 
+        error={error}
+        delay={5000}
+        handleShow={handleShow}
+        show={show}
+        autohide
+      />
       <Container fluid className='d-flex align-items-center justify-content-center'>
         <Col lg={6} md={6} sm={12}>
           <Row>
