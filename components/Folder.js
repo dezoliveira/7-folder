@@ -65,6 +65,7 @@ export default function Folder ({
               <Folder 
                 key={childFolder.id} 
                 id={childFolder.id}
+                name={childFolder.name}
                 folder={childFolder} 
                 allFolders={allFolders} 
                 handleRemove={handleRemove} 
