@@ -39,7 +39,7 @@ const Home = () => {
   }
 
   const handleShow = () => setShow(true)
-
+  
   useEffect(() => {
     getFolders()
   }, [])
@@ -83,14 +83,11 @@ const Home = () => {
     await fetch('https://7dev-code-test.lcc7.online/api/v1/directories', {
       method: 'POST',
       headers: {
-        // 'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'accept': 'application/json',
         'X-CSRFToken': 'SDucg4TiBJFGE6pkEpY75iXFIPBSJm2Os8APEPFSkbRLOC4aLRcvRuKAuFCBBWlu',
         Authorization: `Bearer ${JSON.parse(token)}`
-        // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        // 'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'
       },
       body: JSON.stringify(
         {
@@ -264,25 +261,6 @@ const Home = () => {
                 handleId={handleId}
               />
             )) : ''}
-            {/* {
-              folders.length ?
-              <>
-                {
-                  folders.map((folder, index) => (
-                    <Container key={index}>                    
-                      <Folder
-                        name={folder.name} 
-                        id={folder.id}
-                        parent={folder.parent}
-                        handleRemove={deleteFolder}
-                        handleShow={handleShow}
-                        teste={teste}
-                      />
-                    </Container>
-                  ))
-                }
-              </> : ''
-            } */}
           </Row>
         </Col>
       </Container>
