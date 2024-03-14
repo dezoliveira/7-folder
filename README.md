@@ -16,3 +16,15 @@ react-fontawesome": ^1.7.1
 1 - git clone https://www.github.com/dezoliveira/7folder
 2 - npm install
 3 - npm run dev
+
+------------
+#### CORS
+Caso tenha problemas de CORS con o Next, a solução que encontrei foi utilizar a extensão CORS Unblock no Chrome
+Link de para Download: https://chromewebstore.google.com/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino
+
+------------
+#### Rotas
+O Aplicativo possui as seguintes rotas:
+
+'/' : Rota Raiz da Aplicação que será acessada após efetuação de login e recebimento de Token
+'/login': Rota que redireciona para página de Login para primeiro acesso ou caso o Token tenha expirado.
