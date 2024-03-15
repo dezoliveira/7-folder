@@ -1,6 +1,7 @@
 //Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons/faCirclePlus'
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons/faRightFromBracket'
 
 //Bootstrap
 import 'bootstrap/dist/css/bootstrap.css';
@@ -46,7 +47,6 @@ const Home = () => {
 
   const getFolders = () => {
     let token = localStorage.getItem('token')
-    console.log(token)
 
     if(token === undefined) {
       router.push('/')
@@ -103,7 +103,6 @@ const Home = () => {
 
   const deleteFolder = async (id) => {
     let token = localStorage.getItem('token')
-    console.log(token)
 
     if(token === undefined) {
       router.push('/')
@@ -171,6 +170,15 @@ const Home = () => {
     setSelectedParent(parent)
     setid(id)
     setEdit(true)
+  }
+
+  //User Logout
+  const handleLogout = (e) => {
+    e.preventDefault()
+    localStorage.clear()
+    setTimeout(() => {
+      router.push('/login')
+    }, 2000)
   }
 
   //Root folders array
@@ -242,6 +250,13 @@ const Home = () => {
           >
             Pasta 
             <FontAwesomeIcon icon={faCirclePlus} />  
+          </Button>
+          <Button
+            className='d-flex gap-2 align-items-center justify-content-center'
+            onClick={handleLogout}
+          >
+            <FontAwesomeIcon icon={faRightFromBracket} />
+            Logout
           </Button>
         </Container>
       </Navbar>
