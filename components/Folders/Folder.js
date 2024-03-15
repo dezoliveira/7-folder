@@ -12,7 +12,6 @@ import {
   ListGroup,
   Col
 } from 'react-bootstrap';
-import Actions from './Actions';
 
 export default function Folder ({
     id,
