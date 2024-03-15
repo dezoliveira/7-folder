@@ -125,7 +125,6 @@ const Home = () => {
 
     await fetch(`https://7dev-code-test.lcc7.online/api/v1/directory/${id}`, requestOptions)
     .then(handleErrors)
-    // .then((response) => response.json())
     .then(() => {
       setFolders(folders.filter((folder) => folder.id !== id))
     })
@@ -137,14 +136,11 @@ const Home = () => {
     await fetch(`https://7dev-code-test.lcc7.online/api/v1/directory/${id}`, {
       method: 'PATCH',
       headers: {
-        // 'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'accept': 'application/json',
         'X-CSRFToken': 'SDucg4TiBJFGE6pkEpY75iXFIPBSJm2Os8APEPFSkbRLOC4aLRcvRuKAuFCBBWlu',
         Authorization: `Bearer ${JSON.parse(token)}`
-        // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        // 'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'
       },
       body: JSON.stringify(
         {
@@ -177,7 +173,8 @@ const Home = () => {
     setEdit(true)
   }
 
-  const rootFolders = folders.filter(folder => folder.parent === null)
+  //Root folders array
+  const rootFolders = Object.values(folders).filter(folder => folder.parent === null)
     
   return (
     <Container fluid>
@@ -214,18 +211,23 @@ const Home = () => {
                     </Form.Select>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formFolderName">
-                    <Form.Label>Nome da Pasta:</Form.Label>
-                    <Form.Control value={inputFolder ? inputFolder : ''} type="text" placeholder="Ex: Fotos" onChange={e => setInputFolder(e.target.value)} />
+                  <Form.Label>Nome da Pasta:</Form.Label>
+                  <Form.Control
+                    value={inputFolder ? inputFolder : ''}
+                    type="text"
+                    placeholder="Ex: Fotos"
+                    onChange={e => setInputFolder(e.target.value)}
+                  />
                 </Form.Group>
               </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                  Fechar
-                </Button>
-                <Button variant="primary" onClick={submitValue}>
-                  {edit ? 'Editar' : 'Criar'}
-                </Button>
+              <Button variant="secondary" onClick={handleClose}>
+                Fechar
+              </Button>
+              <Button variant="primary" onClick={submitValue}>
+                {edit ? 'Editar' : 'Criar'}
+              </Button>
             </Modal.Footer>
           </Modal>
         </>
