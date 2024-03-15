@@ -41,34 +41,34 @@ O Aplicativo possui as seguintes páginas: </br>
 #### Uso
 1 - Logando: </br>
 
-    - Para realizar o Login, use as credenciais do usuário (caso não tenha as credenciais favor entrar em contato). </br>
-    - Caso for inválida o app sinalizará o usuário quanto a isso. </br>
-    - Após logar, ao entrar na página do aplicativo, o aplicativo exibirá todos os diretórios criados na API. </br>
+- Para realizar o Login, use as credenciais do usuário (caso não tenha as credenciais favor entrar em contato). </br>
+- Caso for inválida o app sinalizará o usuário quanto a isso. </br>
+- Após logar, ao entrar na página do aplicativo, o aplicativo exibirá todos os diretórios criados na API. </br>
 
 2 - Criando um diretório (Sem parente): </br>
 
-    - Para Criar um novo diretório, selecione o botão (Pasta (+)). </br>
-    - Selecione o nome do diretório no Modal e Crie o diretório. </br>
+- Para Criar um novo diretório, selecione o botão (Pasta (+)). </br>
+- Selecione o nome do diretório no Modal e Crie o diretório. </br>
 
 3 - Criando um diretório (Com parente): </br>
 
-    - Para Criar um novo diretório com parente, selecione o botão (Pasta (+)). </br>
-    - Selecione o nome do diretório no Modal. </br>
-    - Selecione o diretório raiz no qual o diretório a ser criado pertencerá e Crie o diretório. </br>
+- Para Criar um novo diretório com parente, selecione o botão (Pasta (+)). </br>
+- Selecione o nome do diretório no Modal. </br>
+- Selecione o diretório raiz no qual o diretório a ser criado pertencerá e Crie o diretório. </br>
 
 4 - Editando um diretório (Sem parente): </br>
 
-    - Para Editar um usuário, clique no ícone laranja com uma caneta </br>
-    - Selecione um novo nome caso deseja e clique em editar. </br>
+- Para Editar um usuário, clique no ícone laranja com uma caneta </br>
+- Selecione um novo nome caso deseja e clique em editar. </br>
 
 5 - Editando um diretório (Com parente): </br>
 
-    - Para Editar um usuário, clique no ícone laranja com uma caneta </br>
-    - Selecione um novo nome, um novo parente e caso deseja e clique em editar. </br>
+- Para Editar um usuário, clique no ícone laranja com uma caneta </br>
+- Selecione um novo nome, um novo parente e caso deseja e clique em editar. </br>
 
 6 - Excluindo um diretório: </br>
 
-    - Para Excluir um usuário, clique no ícone vermelho com uma lixeira </br>
-    - O diretório será excluído. </br>
+- Para Excluir um usuário, clique no ícone vermelho com uma lixeira </br>
+- O diretório será excluído. </br>
 
 7 - Para encerrar o aplicativo clique no botão Logout. 
