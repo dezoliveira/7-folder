@@ -25,14 +25,14 @@ Link de para Download: https://chromewebstore.google.com/detail/cors-unblock/lfh
 
 ------------
 #### Rotas
-O Aplicativo possui as seguintes rotas: </br></br> 
+O Aplicativo possui as seguintes rotas: </br>
 
 1 - '/' : Rota Raiz da Aplicação que será acessada após efetuação de login e recebimento de Token </br> 
 2 - '/login': Rota que redireciona para página de Login para primeiro acesso ou caso o Token tenha expirado.
 
 ------------
 #### Páginas
-O Aplicativo possui as seguintes páginas: </br></br> 
+O Aplicativo possui as seguintes páginas: </br> 
 
 1 - index.js: Página principal onde é possível fazer todas as ações referentes ao aplicativo. </br>
 2 - login:js: Página onde é exibido o formulário de acesso ao aplicativo.
@@ -42,27 +42,27 @@ O Aplicativo possui as seguintes páginas: </br></br>
 1 - Logando: </br>
     - Para realizar o Login, use as credenciais do usuário (caso não tenha as credenciais favor entrar em contato). </br>
     - Caso for inválida o app sinalizará o usuário quanto a isso. </br>
-    - Após logar, ao entrar na página do aplicativo, o aplicativo exibirá todos os diretórios criados na API. </br></br>
+    - Após logar, ao entrar na página do aplicativo, o aplicativo exibirá todos os diretórios criados na API. </br>
 
 2 - Criando um diretório (Sem parente): </br>
     - Para Criar um novo diretório, selecione o botão (Pasta (+)). </br>
-    - Selecione o nome do diretório no Modal e Crie o diretório. </br></br>
+    - Selecione o nome do diretório no Modal e Crie o diretório. </br>
 
 3 - Criando um diretório (Com parente): </br>
     - Para Criar um novo diretório com parente, selecione o botão (Pasta (+)). </br>
     - Selecione o nome do diretório no Modal. </br>
-    - Selecione o diretório raiz no qual o diretório a ser criado pertencerá e Crie o diretório. </br></br>
+    - Selecione o diretório raiz no qual o diretório a ser criado pertencerá e Crie o diretório. </br>
 
 4 - Editando um diretório (Sem parente): </br>
     - Para Editar um usuário, clique no ícone laranja com uma caneta </br>
-    - Selecione um novo nome caso deseja e clique em editar. </br></br>
+    - Selecione um novo nome caso deseja e clique em editar. </br>
 
 5 - Editando um diretório (Com parente): </br>
     - Para Editar um usuário, clique no ícone laranja com uma caneta </br>
-    - Selecione um novo nome, um novo parente e caso deseja e clique em editar. </br></br>
+    - Selecione um novo nome, um novo parente e caso deseja e clique em editar. </br>
 
 6 - Excluindo um diretório: </br>
     - Para Excluir um usuário, clique no ícone vermelho com uma lixeira </br>
-    - O diretório será excluído. </br></br>
+    - O diretório será excluído. </br>
 
 7 - Para encerrar o aplicativo clique no botão Logout. 
