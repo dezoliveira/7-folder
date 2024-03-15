@@ -20,8 +20,9 @@ const FormLogin = ({handleSubmit, error, show}) => {
   const inputRef = useRef(null)
 
   useEffect(() => {
-    error ? this.inputRef.focus() : null
-  }, [])
+    inputRef.current.focus()
+    error ? inputRef.current.focus() : null
+  }, [error])
 
   const submitForm = (e) => {
     e.preventDefault()
@@ -43,6 +44,7 @@ const FormLogin = ({handleSubmit, error, show}) => {
                   className={error ? 'border-danger' : ''}
                   onChange={e => setInputUsername(e.target.value)}
                   ref={inputRef}
+                  autoFocus={error}
                 />
               </Form.Group>
 
