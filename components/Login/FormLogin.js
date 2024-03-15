@@ -10,17 +10,18 @@ import {
 } from 'react-bootstrap';
 
 // import { useRouter } from 'next/navigation'
-import { useState, useRef } from 'react'
-
-//Components
+import { useState, useRef, useEffect } from 'react'
 
 const FormLogin = ({handleSubmit, error, show}) => {
-  console.log(error)
   const [inputUsername, setInputUsername] = useState("")
   const [inputPassword, setInputPassword] = useState("")
   const [inputChecked, setInputChecked] = useState(true)
 
   const inputRef = useRef(null)
+
+  useEffect(() => {
+    error ? this.inputRef.focus() : null
+  }, [])
 
   const submitForm = (e) => {
     e.preventDefault()
