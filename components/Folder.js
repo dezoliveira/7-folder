@@ -12,11 +12,11 @@ import {
   ListGroup,
   Col
 } from 'react-bootstrap';
-import Actions from './Actions';
 
 export default function Folder ({
     id,
     name,
+    parent,
     handleRemove,
     handleId,
     handleShow,
@@ -66,6 +66,7 @@ export default function Folder ({
                 key={childFolder.id} 
                 id={childFolder.id}
                 name={childFolder.name}
+                parent={childFolder.parent}
                 folder={childFolder} 
                 allFolders={allFolders} 
                 handleRemove={handleRemove} 

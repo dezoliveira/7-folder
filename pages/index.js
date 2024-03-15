@@ -1,6 +1,7 @@
 //Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons/faCirclePlus'
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons/faRightFromBracket'
 
 //Bootstrap
 import 'bootstrap/dist/css/bootstrap.css';
@@ -19,7 +20,7 @@ import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react';
 
 //Components
-import Folder from '../components/Folder';
+import Folder from '../components/Folder'
 
 const Home = () => {
   const router = useRouter()
@@ -39,14 +40,13 @@ const Home = () => {
   }
 
   const handleShow = () => setShow(true)
-
+  
   useEffect(() => {
     getFolders()
   }, [])
 
   const getFolders = () => {
     let token = localStorage.getItem('token')
-    console.log(token)
 
     if(token === undefined) {
       router.push('/')
@@ -83,14 +83,11 @@ const Home = () => {
     await fetch('https://7dev-code-test.lcc7.online/api/v1/directories', {
       method: 'POST',
       headers: {
-        // 'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'accept': 'application/json',
         'X-CSRFToken': 'SDucg4TiBJFGE6pkEpY75iXFIPBSJm2Os8APEPFSkbRLOC4aLRcvRuKAuFCBBWlu',
         Authorization: `Bearer ${JSON.parse(token)}`
-        // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        // 'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'
       },
       body: JSON.stringify(
         {
@@ -106,7 +103,6 @@ const Home = () => {
 
   const deleteFolder = async (id) => {
     let token = localStorage.getItem('token')
-    console.log(token)
 
     if(token === undefined) {
       router.push('/')
@@ -128,7 +124,6 @@ const Home = () => {
 
     await fetch(`https://7dev-code-test.lcc7.online/api/v1/directory/${id}`, requestOptions)
     .then(handleErrors)
-    // .then((response) => response.json())
     .then(() => {
       setFolders(folders.filter((folder) => folder.id !== id))
     })
@@ -140,14 +135,11 @@ const Home = () => {
     await fetch(`https://7dev-code-test.lcc7.online/api/v1/directory/${id}`, {
       method: 'PATCH',
       headers: {
-        // 'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'accept': 'application/json',
         'X-CSRFToken': 'SDucg4TiBJFGE6pkEpY75iXFIPBSJm2Os8APEPFSkbRLOC4aLRcvRuKAuFCBBWlu',
         Authorization: `Bearer ${JSON.parse(token)}`
-        // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        // 'Access-Control-Allow-Methods': 'OPTIONS, POST, GET'
       },
       body: JSON.stringify(
         {
@@ -180,7 +172,17 @@ const Home = () => {
     setEdit(true)
   }
 
-  const rootFolders = folders.filter(folder => folder.parent === null)
+  //User Logout
+  const handleLogout = (e) => {
+    e.preventDefault()
+    localStorage.clear()
+    setTimeout(() => {
+      router.push('/login')
+    }, 2000)
+  }
+
+  //Root folders array
+  const rootFolders = Object.values(folders).filter(folder => folder.parent === null)
     
   return (
     <Container fluid>
@@ -217,18 +219,23 @@ const Home = () => {
                     </Form.Select>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formFolderName">
-                    <Form.Label>Nome da Pasta:</Form.Label>
-                    <Form.Control value={inputFolder ? inputFolder : ''} type="text" placeholder="Ex: Fotos" onChange={e => setInputFolder(e.target.value)} />
+                  <Form.Label>Nome da Pasta:</Form.Label>
+                  <Form.Control
+                    value={inputFolder ? inputFolder : ''}
+                    type="text"
+                    placeholder="Ex: Fotos"
+                    onChange={e => setInputFolder(e.target.value)}
+                  />
                 </Form.Group>
               </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                  Fechar
-                </Button>
-                <Button variant="primary" onClick={submitValue}>
-                  {edit ? 'Editar' : 'Criar'}
-                </Button>
+              <Button variant="secondary" onClick={handleClose}>
+                Fechar
+              </Button>
+              <Button variant="primary" onClick={submitValue}>
+                {edit ? 'Editar' : 'Criar'}
+              </Button>
             </Modal.Footer>
           </Modal>
         </>
@@ -243,6 +250,13 @@ const Home = () => {
           >
             Pasta 
             <FontAwesomeIcon icon={faCirclePlus} />  
+          </Button>
+          <Button
+            className='d-flex gap-2 align-items-center justify-content-center'
+            onClick={handleLogout}
+          >
+            <FontAwesomeIcon icon={faRightFromBracket} />
+            Logout
           </Button>
         </Container>
       </Navbar>
@@ -264,25 +278,6 @@ const Home = () => {
                 handleId={handleId}
               />
             )) : ''}
-            {/* {
-              folders.length ?
-              <>
-                {
-                  folders.map((folder, index) => (
-                    <Container key={index}>                    
-                      <Folder
-                        name={folder.name} 
-                        id={folder.id}
-                        parent={folder.parent}
-                        handleRemove={deleteFolder}
-                        handleShow={handleShow}
-                        teste={teste}
-                      />
-                    </Container>
-                  ))
-                }
-              </> : ''
-            } */}
           </Row>
         </Col>
       </Container>
