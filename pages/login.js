@@ -1,4 +1,4 @@
-import FormLogin from "../components/Login/FormLogin"
+import FormLogin from "../components/FormLogin"
 import Image from "next/image"
 
 //Boostrap
@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation'
 import { useState, useRef } from 'react'
 
 //Components
-import Toastie from "../components/Utils/Toastie"
+import Toastie from "../components/Toastie"
 
 //JSX Styles
 const imageStyle = {
