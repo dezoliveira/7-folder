@@ -9,96 +9,30 @@ import {
   Row,
 } from 'react-bootstrap';
 
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import { useState, useRef } from 'react'
 
 //Components
-import Toastie from '../Utils/Toastie';
 
-const FormLogin = () => {
+const FormLogin = ({handleSubmit, error, show}) => {
+  console.log(error)
   const [inputUsername, setInputUsername] = useState("")
   const [inputPassword, setInputPassword] = useState("")
   const [inputChecked, setInputChecked] = useState(true)
-  const [show, setShow] = useState(false)
-  const [error, setError] = useState(false)
 
   const inputRef = useRef(null)
-  const router = useRouter()
 
-  const redirectTo = () => {
-    router.push('/')
-  }
-
-  const authRequest = async (e) => {
+  const submitForm = (e) => {
     e.preventDefault()
-
-    await fetch('https://7dev-code-test.lcc7.online/api/v1/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
-      body: JSON.stringify(
-        {
-          username: inputUsername,
-          password: inputPassword
-        }
-      )
-    })
-    .then(response => {
-      if(!response.ok){
-        handleError()
-        return
-      } else {
-        return response.json()
-      }
-    })
-    .then(data => { 
-      console.log(data)
-      handleAccess(data)
-    });
-
-  }
-
-  const handleToken = (data) => {
-    localStorage.setItem('token', JSON.stringify(data.access))
-  }
-
-  const handleAccess = (data) => {
-    if (data !== undefined) {
-      setError(false)
-      setShow(true)
-      handleToken(data)
-      setTimeout(() => {
-        redirectTo()
-      }, 2000);
-    }
-  }
-
-  const handleError = () => {
-    setShow(true)
-    setError(true)
-    inputRef.current.focus();
-    return
-  }
-
-  const handleShow = () => {
-    setShow(false)
+    handleSubmit(inputUsername, inputPassword)
   }
 
   return (
     <Container fluid>
-      <Toastie 
-        error={error}
-        delay={5000}
-        handleShow={handleShow}
-        show={show}
-        autohide
-      />
       <Container fluid className='d-flex align-items-center justify-content-center'>
         <Col lg={6} md={6} sm={12}>
           <Row>
-            <Form>
+            <Form onSubmit={submitForm}>
               {/* Login */}
               <Form.Group className="mb-3" controlId="formLogin">
                 <Form.Label>Login</Form.Label>
@@ -131,8 +65,7 @@ const FormLogin = () => {
                   label="Manter Conectado" />
               </Form.Group>
 
-              {/* Button Login */}
-              <Button variant="primary" type="submit" onClick={authRequest}>
+              <Button variant="primary" type="submit">
                 Entrar
               </Button>
             </Form>
