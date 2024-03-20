@@ -20,8 +20,8 @@ import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react';
 
 //Components
-import Folder from '../components/Folder'
-import FormFolder from '../components/FormFolder';
+import Folder from '../components/folders/Folder'
+import FormFolder from '../components/folders/FormFolder'
 
 const Home = () => {
   const router = useRouter()
