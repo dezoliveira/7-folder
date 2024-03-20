@@ -4,6 +4,7 @@ import {
   Container,
   Form
 } from 'react-bootstrap';
+import SelectFolder from './SelectFolder';
 
 export default function FormFolder({
 	folders,
@@ -26,25 +27,11 @@ export default function FormFolder({
 			<Form>
 				<Form.Group className="mb-3" controlId="formFolderName">
 					<Form.Label>Pasta Raiz:</Form.Label>
-					<Form.Select 
-						aria-label="Default select example"
-						onChange={handleParent}
-						value={selectedParent ? selectedParent : ''}
-					>
-						<option value="">/</option>
-							{
-								folders.length ?
-								<>
-									{
-										folders.map(folder => (
-											<option value={folder.id} key={folder.id}>
-												{folder.name}
-											</option>
-										))
-									}
-								</> : ''
-							}
-					</Form.Select>
+					<SelectFolder 
+						folders={folders}
+						selectedParent={selectedParent}
+						handleParent={handleParent}
+					/>
 				</Form.Group>
 				<Form.Group className="mb-3" controlId="formFolderName">
 					<Form.Label>Nome da Pasta:</Form.Label>
