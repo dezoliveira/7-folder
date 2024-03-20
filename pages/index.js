@@ -21,6 +21,7 @@ import { useState, useEffect } from 'react';
 
 //Components
 import Folder from '../components/Folder'
+import FormFolder from '../components/FormFolder';
 
 const Home = () => {
   const router = useRouter()
@@ -191,43 +192,16 @@ const Home = () => {
           {/* Modal */}
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Criação de Pastas</Modal.Title>
+              <Modal.Title>Criação de Pastas</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Form>
-                {/* Folder Name */}
-                <Form.Group className="mb-3" controlId="formFolderName">
-                    <Form.Label>Pasta Raiz:</Form.Label>
-                    <Form.Select 
-                      aria-label="Default select example"
-                      onChange={e => setSelectedParent(e.target.value)}
-                      value={selectedParent ? selectedParent : ''}
-                    >
-                      <option value="">/</option>
-                        {
-                          folders.length ?
-                          <>
-                            {
-                              folders.map(folder => (
-                                <option value={folder.id} key={folder.id}>
-                                  {folder.name}
-                                </option>
-                              ))
-                            }
-                          </> : ''
-                        }
-                    </Form.Select>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formFolderName">
-                  <Form.Label>Nome da Pasta:</Form.Label>
-                  <Form.Control
-                    value={inputFolder ? inputFolder : ''}
-                    type="text"
-                    placeholder="Ex: Fotos"
-                    onChange={e => setInputFolder(e.target.value)}
-                  />
-                </Form.Group>
-              </Form>
+              <FormFolder 
+                folders={folders}
+                selectedParent={selectedParent}
+                setInputFolder={setInputFolder}
+                inputFolder={inputFolder}
+                setSelectedParent={setSelectedParent}
+              />
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
