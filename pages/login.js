@@ -102,6 +102,7 @@ export default function Login() {
         handleShow={handleShow}
         show={show}
         message={message}
+        customClass={false}
         autohide
       />
       <Container fluid className="d-flex align-items-center">

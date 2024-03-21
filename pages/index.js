@@ -264,11 +264,12 @@ const Home = () => {
 
       <Message 
         error={error}
-        delay={5000}
+        delay={2000}
         handleShow={handleShow}
         show={showMessage}
         message={message}
         autohide
+        customClass={true}
       />
 
       {/* Navbar */}
