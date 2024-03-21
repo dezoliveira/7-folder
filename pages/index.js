@@ -20,7 +20,9 @@ import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react';
 
 //Components
-import Folder from '../components/Folder'
+import Folder from '../components/folders/Folder'
+import FormFolder from '../components/Folders/FormFolder'
+import Message from '../components/elements/Message';
 
 const Home = () => {
   const router = useRouter()
@@ -28,18 +30,22 @@ const Home = () => {
 
   const [inputFolder, setInputFolder] = useState("")
   const [selectedParent, setSelectedParent] = useState("")
-  const [show, setShow] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [showMessage, setShowMessage] = useState(false)
+  const [message, setMessage] = useState("")
   const [edit, setEdit] = useState(false)
   const [id, setid] = useState("")
 
+  const [error, setError] = useState("")
+
   const handleClose = () => {
-    setShow(false)
+    setShowModal(false)
     setInputFolder("")
     setSelectedParent("")
     setEdit(false)
   }
 
-  const handleShow = () => setShow(true)
+  const handleShowModal = () => setShowModal(true)
   
   useEffect(() => {
     getFolders()
@@ -72,6 +78,7 @@ const Home = () => {
   const handleErrors = (response) => {
     if(response.status === 401) {
       router.push('/login')
+      setError(true)
     }
 
     return response
@@ -97,6 +104,7 @@ const Home = () => {
       )
     })
     .then(() => {
+      handleMessage('create')
       getFolders()
     })
   }
@@ -125,6 +133,7 @@ const Home = () => {
     await fetch(`https://7dev-code-test.lcc7.online/api/v1/directory/${id}`, requestOptions)
     .then(handleErrors)
     .then(() => {
+      handleMessage('delete')
       setFolders(folders.filter((folder) => folder.id !== id))
     })
   }
@@ -149,6 +158,7 @@ const Home = () => {
       )
     })
     .then(() => {
+      handleMessage('edit')
       getFolders()
     })
   }
@@ -181,53 +191,64 @@ const Home = () => {
     }, 2000)
   }
 
+  const handleShow = () => {
+    setShowMessage(false)
+  }
+
   //Root folders array
   const rootFolders = Object.values(folders).filter(folder => folder.parent === null)
+
+  const handleMessage = (action) => {
+    // error: 'Loign incorreto!',
+    // success: 'Logado com sucesso!'
+    let error = ""
+    let success = ""
+
+    switch(action) {
+      case 'create':
+        error = 'Diretório não pode ser criado!'
+        success = 'Diretório criado com sucesso!'
+        break
+
+      case 'edit':
+        error = 'Diretório não pode ser editado!'
+        success = 'Diretório editado com sucesso!'
+        break
+        
+      case 'delete':
+        error = 'Diretório não pode ser excluído!'
+        success = 'Diretório excluído com sucesso!'
+        break
+
+      default:
+        setShowMessage(false)
+    }
+
+    setMessage({
+      error: error,
+      success: success
+    })
+
+    setShowMessage(true)
+  }
     
   return (
     <Container fluid>
       { 
         <>
           {/* Modal */}
-          <Modal show={show} onHide={handleClose}>
+          <Modal show={showModal} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Criação de Pastas</Modal.Title>
+              <Modal.Title>Criação de Pastas</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Form>
-                {/* Folder Name */}
-                <Form.Group className="mb-3" controlId="formFolderName">
-                    <Form.Label>Pasta Raiz:</Form.Label>
-                    <Form.Select 
-                      aria-label="Default select example"
-                      onChange={e => setSelectedParent(e.target.value)}
-                      value={selectedParent ? selectedParent : ''}
-                    >
-                      <option value="">/</option>
-                        {
-                          folders.length ?
-                          <>
-                            {
-                              folders.map(folder => (
-                                <option value={folder.id} key={folder.id}>
-                                  {folder.name}
-                                </option>
-                              ))
-                            }
-                          </> : ''
-                        }
-                    </Form.Select>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formFolderName">
-                  <Form.Label>Nome da Pasta:</Form.Label>
-                  <Form.Control
-                    value={inputFolder ? inputFolder : ''}
-                    type="text"
-                    placeholder="Ex: Fotos"
-                    onChange={e => setInputFolder(e.target.value)}
-                  />
-                </Form.Group>
-              </Form>
+              <FormFolder 
+                folders={folders}
+                selectedParent={selectedParent}
+                setInputFolder={setInputFolder}
+                inputFolder={inputFolder}
+                setSelectedParent={setSelectedParent}
+              />
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
@@ -241,12 +262,22 @@ const Home = () => {
         </>
       }
 
+      <Message 
+        error={error}
+        delay={2000}
+        handleShow={handleShow}
+        show={showMessage}
+        message={message}
+        autohide
+        customClass={true}
+      />
+
       {/* Navbar */}
       <Navbar className="bg-body-tertiary">
         <Container>
           <Button 
             className='d-flex gap-2 align-items-center justify-content-center'
-            onClick={handleShow} 
+            onClick={handleShowModal} 
           >
             Pasta 
             <FontAwesomeIcon icon={faCirclePlus} />  
@@ -274,7 +305,7 @@ const Home = () => {
                 parent={rootFolder.parent}
                 allFolders={folders} 
                 handleRemove={deleteFolder}
-                handleShow={handleShow}
+                handleShow={handleShowModal}
                 handleId={handleId}
               />
             )) : ''}
