@@ -8,13 +8,14 @@ import {
 } from 'react-bootstrap';
 
 //JSX Styles
-const toastiee = {
+const onScreen = {
   position: 'absolute',
   top: 50,
-  right: 50
+  right: 50,
+  zIndex: 9999
 }
 
-export default function Toastie({error, show, delay, handleShow}) {
+export default function Message({error, show, delay, handleShow, message}) {
 	const toggleShow = () => {
 		handleShow(true)
 	}
@@ -24,7 +25,7 @@ export default function Toastie({error, show, delay, handleShow}) {
 			<Row>
 				<Col >
 					<Toast 
-						style={toastiee} 
+						style={onScreen} 
 						className={error ? 'bg-danger' : 'bg-success'} 
 						onClose={() => toggleShow(false)}
 						show={show} delay={delay}
@@ -36,10 +37,12 @@ export default function Toastie({error, show, delay, handleShow}) {
 								className="rounded me-2"
 								alt=""
 							/>
-							<strong className="me-auto">Login</strong>
+							<strong className="me-auto">
+								{error ? 'Algo deu errado' : 'Deu tudo certo'}
+							</strong>
 						</Toast.Header>
 						<Toast.Body>
-							{error ? 'Login Incorreto!' : 'Logado com sucesso!'}
+							{error ? message.error : message.success}
 						</Toast.Body>
 					</Toast>
 				</Col>

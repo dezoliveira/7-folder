@@ -13,7 +13,7 @@ import { useState, useRef } from 'react'
 //Components
 import FormLogin from "../components/login/FormLogin"
 import Image from "next/image"
-import Toastie from "../components/Toastie"
+import Message from "../components/elements/Message"
 
 //JSX Styles
 const imageStyle = {
@@ -89,13 +89,19 @@ export default function Login() {
     setShow(false)
   }
 
+  const message = {
+    error: 'Loign incorreto!',
+    success: 'Logado com sucesso!'
+  }
+
   return (
     <>
-      <Toastie 
+      <Message 
         error={error}
         delay={5000}
         handleShow={handleShow}
         show={show}
+        message={message}
         autohide
       />
       <Container fluid className="d-flex align-items-center">
