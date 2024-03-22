@@ -20,9 +20,9 @@ import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react';
 
 //Components
-import Folder from '../components/folders/Folder'
-import FormFolder from '../components/Folders/FormFolder'
-import Message from '../components/elements/Message';
+import Folder from '@/components/folders/Folder'
+import FormFolder from '@/components/Folders/FormFolder'
+import Message from '@/components/elements/Message';
 
 const Home = () => {
   const router = useRouter()
@@ -61,13 +61,15 @@ const Home = () => {
     const requestOptions = {
       method: 'GET',
       headers: {
+        'Content-Type': 'application/json',
         'accept': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
         'X-CSRFToken': 'SDucg4TiBJFGE6pkEpY75iXFIPBSJm2Os8APEPFSkbRLOC4aLRcvRuKAuFCBBWlu',
         Authorization: `Bearer ${JSON.parse(token)}`
       }
     }
 
-    fetch(`https://7dev-code-test.lcc7.online/api/v1/directories`, requestOptions)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/directories`, requestOptions)
     .then(handleErrors)
     .then((response) => response.json())
     .then((data) => {
@@ -87,11 +89,10 @@ const Home = () => {
   const createFolder = async () => {
     let token = localStorage.getItem('token')
     
-    await fetch('https://7dev-code-test.lcc7.online/api/v1/directories', {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/directories`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
         'accept': 'application/json',
         'X-CSRFToken': 'SDucg4TiBJFGE6pkEpY75iXFIPBSJm2Os8APEPFSkbRLOC4aLRcvRuKAuFCBBWlu',
         Authorization: `Bearer ${JSON.parse(token)}`
@@ -130,7 +131,7 @@ const Home = () => {
       })
     }
 
-    await fetch(`https://7dev-code-test.lcc7.online/api/v1/directory/${id}`, requestOptions)
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/directory/${id}`, requestOptions)
     .then(handleErrors)
     .then(() => {
       handleMessage('delete')
@@ -141,11 +142,10 @@ const Home = () => {
   const editFolder = async () => {
     let token = localStorage.getItem('token')
     
-    await fetch(`https://7dev-code-test.lcc7.online/api/v1/directory/${id}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/directory/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
         'accept': 'application/json',
         'X-CSRFToken': 'SDucg4TiBJFGE6pkEpY75iXFIPBSJm2Os8APEPFSkbRLOC4aLRcvRuKAuFCBBWlu',
         Authorization: `Bearer ${JSON.parse(token)}`

@@ -4,7 +4,7 @@ import {
   Form
 } from 'react-bootstrap';
 
-export default function FormSelect({folders, handleParent, selectedParent}) {
+export default function SelectFolder({folders, handleParent, selectedParent}) {
 	return (
 		<>
 			<Form.Select 
