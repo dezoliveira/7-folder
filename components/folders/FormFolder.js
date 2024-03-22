@@ -4,7 +4,7 @@ import {
   Container,
   Form
 } from 'react-bootstrap';
-import SelectFolder from './SelectFolder';
+import SelectFolder from '@/components/folders/SelectFolder';
 
 export default function FormFolder({
 	folders,
