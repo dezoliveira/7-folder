@@ -21,7 +21,7 @@ import { useState, useEffect } from 'react';
 
 //Components
 import Folder from '@/components/folders/Folder'
-import FormFolder from '@/components/Folders/FormFolder'
+import FormFolder from '@/components/folders/FormFolder'
 import Message from '@/components/elements/Message';
 
 const Home = () => {

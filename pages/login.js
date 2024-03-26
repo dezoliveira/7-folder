@@ -11,9 +11,9 @@ import { useRouter } from 'next/navigation'
 import { useState, useRef } from 'react'
 
 //Components
-import FormLogin from "../components/login/FormLogin"
+import FormLogin from "@/components/login/FormLogin"
 import Image from "next/image"
-import Message from "../components/elements/Message"
+import Message from "@/components/elements/Message"
 
 //JSX Styles
 const imageStyle = {
