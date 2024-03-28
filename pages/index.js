@@ -238,10 +238,9 @@ const Home = () => {
   }
 
   const handleConfirm = (id, name) => {
-    console.log(name)
-    console.log(id)
     setShowConfirmBox(true)
     setFolderName(name)
+    setid(id)
   }
     
   return (
@@ -289,6 +288,10 @@ const Home = () => {
           title={'Confirmação de Exclusão'}
           message={`Tem certeza que deseja excluir a pasta ${folderName} ?`}
           showConfirmBox={showConfirmBox}
+          handleConfirm={handleConfirm}
+          setShowConfirmBox={setShowConfirmBox}
+          deleteFolder={deleteFolder}
+          id={id}
         />
       </>
 
