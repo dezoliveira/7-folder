@@ -32,7 +32,7 @@ export default function Folder ({
 
   const removeFolder = (e) => {
     e.preventDefault()
-    handleRemove(id)
+    handleRemove(id, name)
   }
 
   return (

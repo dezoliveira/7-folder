@@ -23,17 +23,22 @@ import { useState, useEffect } from 'react';
 import Folder from '@/components/folders/Folder'
 import FormFolder from '@/components/folders/FormFolder'
 import Message from '@/components/elements/Message';
+import ConfirmBox from '@/components/elements/ConfirmBox';
 
 const Home = () => {
   const router = useRouter()
-  const [folders, setFolders] = useState([])
 
+  const [folders, setFolders] = useState([])
   const [inputFolder, setInputFolder] = useState("")
   const [selectedParent, setSelectedParent] = useState("")
+  const [folderName, setFolderName] = useState("")
+
   const [showModal, setShowModal] = useState(false)
+  const [showConfirmBox, setShowConfirmBox] = useState(false)
   const [showMessage, setShowMessage] = useState(false)
   const [message, setMessage] = useState("")
   const [edit, setEdit] = useState(false)
+
   const [id, setid] = useState("")
 
   const [error, setError] = useState("")
@@ -231,6 +236,12 @@ const Home = () => {
 
     setShowMessage(true)
   }
+
+  const handleConfirm = (id, name) => {
+    setShowConfirmBox(true)
+    setFolderName(name)
+    setid(id)
+  }
     
   return (
     <Container fluid>
@@ -272,6 +283,18 @@ const Home = () => {
         customClass={true}
       />
 
+      <>
+        <ConfirmBox
+          title={'Confirmação de Exclusão'}
+          message={`Tem certeza que deseja excluir a pasta ${folderName} ?`}
+          showConfirmBox={showConfirmBox}
+          handleConfirm={handleConfirm}
+          setShowConfirmBox={setShowConfirmBox}
+          deleteFolder={deleteFolder}
+          id={id}
+        />
+      </>
+
       {/* Navbar */}
       <Navbar className="bg-body-tertiary">
         <Container>
@@ -304,7 +327,7 @@ const Home = () => {
                 name={rootFolder.name}
                 parent={rootFolder.parent}
                 allFolders={folders} 
-                handleRemove={deleteFolder}
+                handleRemove={handleConfirm}
                 handleShow={handleShowModal}
                 handleId={handleId}
               />
