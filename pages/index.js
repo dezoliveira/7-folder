@@ -1,10 +1,5 @@
-//Font Awesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons/faCirclePlus'
-import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons/faRightFromBracket'
-
 //Bootstrap
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.css'
 import { 
   Container,
   Col,
@@ -17,13 +12,14 @@ import {
 
 //Uses
 import { useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 //Components
 import Folder from '@/components/folders/Folder'
 import FormFolder from '@/components/folders/FormFolder'
-import Message from '@/components/elements/Message';
-import ConfirmBox from '@/components/elements/ConfirmBox';
+import Message from '@/components/elements/Message'
+import ConfirmBox from '@/components/elements/ConfirmBox'
+import FolderNavbar from '@/components/folders/FolderNavbar'
 
 const Home = () => {
   const router = useRouter()
@@ -188,8 +184,8 @@ const Home = () => {
   }
 
   //User Logout
-  const handleLogout = (e) => {
-    e.preventDefault()
+  const handleLogout = () => {
+    // e.preventDefault()
     localStorage.clear()
     setTimeout(() => {
       router.push('/login')
@@ -204,8 +200,6 @@ const Home = () => {
   const rootFolders = Object.values(folders).filter(folder => folder.parent === null)
 
   const handleMessage = (action) => {
-    // error: 'Loign incorreto!',
-    // success: 'Logado com sucesso!'
     let error = ""
     let success = ""
 
@@ -241,6 +235,11 @@ const Home = () => {
     setShowConfirmBox(true)
     setFolderName(name)
     setid(id)
+  }
+
+  const confirmMsg = {
+    title: 'Confirmação de Exclusão',
+    message: `Tem certeza que deseja excluir a pasta ${folderName} ?`
   }
     
   return (
@@ -283,10 +282,11 @@ const Home = () => {
         customClass={true}
       />
 
+      {/* Confirm Box */}
       <>
         <ConfirmBox
-          title={'Confirmação de Exclusão'}
-          message={`Tem certeza que deseja excluir a pasta ${folderName} ?`}
+          title={confirmMsg.title}
+          message={confirmMsg.message}
           showConfirmBox={showConfirmBox}
           handleConfirm={handleConfirm}
           setShowConfirmBox={setShowConfirmBox}
@@ -295,25 +295,11 @@ const Home = () => {
         />
       </>
 
-      {/* Navbar */}
-      <Navbar className="bg-body-tertiary">
-        <Container>
-          <Button 
-            className='d-flex gap-2 align-items-center justify-content-center'
-            onClick={handleShowModal} 
-          >
-            Pasta 
-            <FontAwesomeIcon icon={faCirclePlus} />  
-          </Button>
-          <Button
-            className='d-flex gap-2 align-items-center justify-content-center'
-            onClick={handleLogout}
-          >
-            <FontAwesomeIcon icon={faRightFromBracket} />
-            Logout
-          </Button>
-        </Container>
-      </Navbar>
+      {/* Navbar to create Folders */}
+      <FolderNavbar 
+        handleShowModal={handleShowModal}
+        handleLogout={handleLogout}
+      />
 
       {/* Folder List */}
       <Container className="p-4">
