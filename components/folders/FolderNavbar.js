@@ -4,7 +4,6 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons/faCirclePlus'
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons/faRightFromBracket'
 
 //Bootstrap
-import 'bootstrap/dist/css/bootstrap.css';
 import { 
   Container,
   Navbar,
