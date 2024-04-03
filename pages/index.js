@@ -306,17 +306,19 @@ const Home = () => {
         <Col>
           <Row>
             {rootFolders.length ? rootFolders.map(rootFolder => (
-              <Folder
-                key={rootFolder.id} 
-                folder={rootFolder}
-                id={rootFolder.id}
-                name={rootFolder.name}
-                parent={rootFolder.parent}
-                allFolders={folders} 
-                handleRemove={handleConfirm}
-                handleShow={handleShowModal}
-                handleId={handleId}
-              />
+              <Container className='mb-4'>
+                <Folder
+                  key={rootFolder.id} 
+                  folder={rootFolder}
+                  id={rootFolder.id}
+                  name={rootFolder.name}
+                  parent={rootFolder.parent}
+                  allFolders={folders} 
+                  handleRemove={handleConfirm}
+                  handleShow={handleShowModal}
+                  handleId={handleId}
+                />
+              </Container>
             )) : ''}
           </Row>
         </Col>
