@@ -6,7 +6,6 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import { faFolderTree } from '@fortawesome/free-solid-svg-icons/faFolderTree'
 
 //Bootstrap
-import 'bootstrap/dist/css/bootstrap.css';
 import { 
   Container,
   ListGroup,
