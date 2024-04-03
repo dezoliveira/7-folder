@@ -43,7 +43,7 @@ export default function Folder ({
               {
                 folder.parent !== null ?
                 <>
-                  <FontAwesomeIcon icon={faFolderTree} />
+                  <FontAwesomeIcon fontSize={12} color='#0d6efd' icon={faFolderTree} />
                 </> : ''
               }
               <FontAwesomeIcon fontSize={32} color='#eab308' icon={faFolder} />  
@@ -56,7 +56,7 @@ export default function Folder ({
           </Container>
         </ListGroup.Item>
       </ListGroup>
-      <Container fluid className='px-3'>
+      <Container fluid>
         {
           allFolders
             .filter(f => f.parent === folder.id)
